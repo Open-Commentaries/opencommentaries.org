@@ -1,0 +1,280 @@
+---
+layout: null
+title: Open Commentaries
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ site.title | default: "Open Commentaries" }}</title>
+  <meta name="description" content="Open, collaborative commentaries on the Greek and Latin classics.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-light: #9fb4c5;
+      --blue-mid: #5b7c93;
+      --blue-deep: #223244;
+      --blue-deepest: #131c26;
+      --ink: #f2ede3;
+      --ink-dim: #cfd9e0;
+      --gold: #cdae6a;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "EB Garamond", Georgia, serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 50% -10%, var(--blue-light) 0%, var(--blue-mid) 32%, var(--blue-deep) 68%, var(--blue-deepest) 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 6vh 5vw 8vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .homer-bg {
+      position: fixed;
+      top: 0;
+      right: -4vw;
+      height: 100vh;
+      max-height: 1100px;
+      width: auto;
+      opacity: 0.32;
+      filter: saturate(0.85) brightness(0.95);
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 45%, transparent 85%);
+      mask-image: linear-gradient(to left, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 45%, transparent 85%);
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+    }
+
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 760px;
+    }
+
+    .site-title {
+      font-family: "Cardo", "EB Garamond", Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: 0.02em;
+      margin: 0 0 0.25em;
+      color: var(--ink);
+      text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+    }
+
+    .site-tagline {
+      font-size: 1.05rem;
+      color: var(--ink-dim);
+      margin: 0 0 3rem;
+      font-style: italic;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.75rem;
+    }
+
+    .passage {
+      background: rgba(19, 28, 38, 0.42);
+      border: 1px solid rgba(205, 174, 106, 0.35);
+      border-radius: 10px;
+      padding: 2.25rem 2.5rem;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+
+    .passage-label {
+      font-family: "Cardo", serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .greek {
+      font-family: "Cardo", "Gentium Plus", "Palatino Linotype", serif;
+      font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+      line-height: 1.85;
+      text-align: center;
+      margin: 0 0 1.6rem;
+      color: var(--ink);
+    }
+
+    .greek em {
+      font-style: normal;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: rgba(205, 174, 106, 0.6);
+      margin: 0 auto 1.6rem;
+    }
+
+    .translation {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      line-height: 1.75;
+      text-align: center;
+      color: var(--ink-dim);
+      margin: 0 0 1.2rem;
+    }
+
+    .translation i {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .credit {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--ink-dim);
+      opacity: 0.85;
+    }
+
+    .credit a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(205, 174, 106, 0.4);
+    }
+
+    .credit a:hover {
+      border-bottom-color: var(--gold);
+    }
+
+    nav.projects {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.25rem;
+      width: 100%;
+    }
+
+    nav.projects a {
+      flex: 1 1 200px;
+      max-width: 260px;
+      text-align: center;
+      padding: 1.1rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      font-family: "Cardo", serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.03em;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(205, 174, 106, 0.4);
+      transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    nav.projects a:hover,
+    nav.projects a:focus-visible {
+      background: rgba(205, 174, 106, 0.16);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    nav.projects a .sub {
+      display: block;
+      font-family: "EB Garamond", serif;
+      font-size: 0.78rem;
+      color: var(--ink-dim);
+      margin-top: 0.3rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 3.5rem;
+      font-size: 0.8rem;
+      color: var(--ink-dim);
+      opacity: 0.7;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .homer-bg { opacity: 0.18; right: -12vw; }
+      .passage { padding: 1.75rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <img class="homer-bg" src="{{ '/assets/images/homer-british-museum.jpg' | relative_url }}" alt="" aria-hidden="true">
+
+  <header>
+    <h1 class="site-title">Open Commentaries</h1>
+    <p class="site-tagline">Reading the ancient world together, line by line.</p>
+  </header>
+
+  <main>
+    <section class="passage">
+      <p class="passage-label">Homer, <em>Iliad</em> 2.488&ndash;93</p>
+      <p class="greek">
+        πληθὺν δ᾿ οὐκ ἂν ἐγὼ μυθήσομαι οὐδ᾿ ὀνομήνω,<br>
+        οὐδ᾿ εἴ μοι δέκα μὲν γλῶσσαι, δέκα δὲ στόματ᾿ εἶεν,<br>
+        φωνὴ δ᾿ ἄρρηκτος, χάλκεον δέ μοι ἦτορ ἐνείη,<br>
+        εἰ μὴ Ὀλυμπιάδες Μοῦσαι Διὸς αἰγιόχοιο<br>
+        θυγατέρες μνησαίατ᾿ ὅσοι ὑπὸ Ἴλιον ἦλθον·<br>
+        ἀρχοὺς αὖ νηῶν ἐρέω νῆάς τε προπάσας.
+      </p>
+      <div class="divider"></div>
+      <p class="translation">
+        But the number [of Achaeans] I could not tell nor name<br>
+        (not even if I had ten tongues and ten mouths<br>
+        and a voice that was unbreaking, and if a heart of bronze were within me)<br>
+        if the Muses of Olympus, of Zeus the aegis&#8209;bearer<br>
+        the daughters, did not mentally connect [<i>mimn&#275;skein</i>] me, (about) how many came to Troy.<br>
+        But now I will say the leaders [<i>arkhoi</i>] of the ships, and all the ships.
+      </p>
+      <p class="credit">
+        trans. Gregory Nagy &mdash;
+        <a href="https://homer.opencommentaries.org/passages/urn:cts:greekLit:tlg0012.tlg001:2/" target="_blank" rel="noopener">source</a>
+      </p>
+    </section>
+
+    <nav class="projects" aria-label="Open Commentaries projects">
+      <a href="https://homer.opencommentaries.org">
+        Homer
+        <span class="sub">Iliad &amp; Odyssey</span>
+      </a>
+      <a href="https://pausanias.opencommentaries.org">
+        Pausanias
+        <span class="sub">Description of Greece</span>
+      </a>
+      <a href="https://pindar.opencommentaries.org">
+        Pindar
+        <span class="sub">Odes</span>
+      </a>
+    </nav>
+  </main>
+
+  <footer>
+    &copy; {{ 'now' | date: "%Y" }} Open Commentaries
+  </footer>
+</body>
+</html>
